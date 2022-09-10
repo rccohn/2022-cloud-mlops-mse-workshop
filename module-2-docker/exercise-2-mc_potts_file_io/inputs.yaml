@@ -1,0 +1,15 @@
+# sample input values, takes about 20s to run on my machine, feel free to change the values
+# length of square system, pixels
+n: 75
+# timesteps (MC steps)
+t: 50
+# Monte carlo temperature kT
+kT: 0.9
+# every n steps, grain size statistics are saved. 
+# if animate = True, also saves the full state of the system.
+checkpoint_iter: 1
+# random seed. if null, one is selected randomly
+seed: null
+# if true, saves full state at each checkpoint_iter to later make movie
+animate: True
+

@@ -1,0 +1,6 @@
+Try making a Dockerfile to run the mc_potts script for generating simulations!
+
+To build: docker build -t potts-cli:test .
+To run: docker run --rm potts-cli:test <params> > results.txt
+
+Try to make your own dockerfile, but if you get stuck, you can look at the solutions. Dockerfile-solution-minimal builds an image with only a couple lines, but ignores some good practices. Dockerfile-solution-better builds an image that incorporates several additional improvements.

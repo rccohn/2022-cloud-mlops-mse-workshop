@@ -1,0 +1,25 @@
+FROM python:3.10-slim-buster
+
+# add non root user "potts"
+RUN useradd --uid 1000 -m potts
+
+# switch to non root user potts
+USER potts
+
+# change directories to avoid working in root
+WORKDIR /home/potts
+
+# copy dependencies
+COPY *.py *.txt ./
+
+# Even though Docker is already an isolated environment,
+# it is still good practice to use virtual environments.
+# Remove requirements file after installation.
+RUN python -m venv my-env && my-env/bin/python -m pip \
+		install -r requirements.txt && rm requirements.txt
+
+# Add virtual environment to path so it is activated by default.
+ENV PATH=/home/potts/my-env/bin:${PATH}
+
+# run simulation
+ENTRYPOINT [ "python", "potts_cli.py" ]

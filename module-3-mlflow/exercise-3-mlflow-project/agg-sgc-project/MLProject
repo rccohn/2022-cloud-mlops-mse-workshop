@@ -1,0 +1,18 @@
+name: GNN-example
+
+conda_env: env.yaml
+
+entry_points:
+  main:
+    parameters:
+      data_train: {type: path, default: 'data/train.json'}
+      data_val: {type: path, default: 'data/val.json'}
+      data_test: {type: path, default: 'data/test.json'}
+      k: {type: float, default: 1.}
+      train_iter: {type: float, default: 2500}
+      checkpoint_iter: {type: float, default: 250}
+      lr: {type: float, default: 0.001}
+      decay: {type: float, default: 0.005}
+    command: "python run_experiment.py {data_train} \
+                {data_val} {data_test} {k} {train_iter} \
+                {checkpoint_iter} {lr} {decay}"

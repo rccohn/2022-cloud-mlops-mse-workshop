@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  jupyter:
+    init: true
+    build:
+      context: ./jupyter_docker_image
+      dockerfile: Dockerfile
+      target: main
+    ports:
+      - 8888:8888/tcp
+    environment:
+      - USER_UID
+    volumes:
+      - type: bind
+        source: ./mount_files
+        target: /mnt/host-files
+        read_only: false

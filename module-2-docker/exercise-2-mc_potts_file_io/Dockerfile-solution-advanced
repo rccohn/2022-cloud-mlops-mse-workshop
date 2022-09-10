@@ -1,0 +1,48 @@
+# Advanced container applies docker good practices, mainly running as non-root,
+# which avoids writing to host as root (security risk.)
+# To match the container UID to 
+# to build: 
+# docker build -t potts-file-io:advanced -f Dockerfile-solution-advanced .
+# to run: docker run --rm -v $(pwd)/<input-file.yaml>:/mnt/inputs.yaml \
+                 -v $(pwd)/<output-dir>:/mnt/outputs \
+				 -e USER_UID=${UID} \
+#				 potts-file-io:advanced
+#         parameters from <input-file> will be used to run simulation
+#         results will be saved in <output-dir>
+# note that UID, your user ID, must be defined on host for this to work!
+
+FROM python:3.10-slim-buster AS builder
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	build-essential git ca-certificates && \
+	rm -rf /var/lib/apt/lists/* && \
+	cd /home/ && git clone https://github.com/ncopa/su-exec.git && \
+	cd su-exec && make su-exec && mv su-exec /usr/local/sbin && \
+	rm -rf /home/su-exec
+
+FROM python:3.10-slim-buster AS main
+
+COPY --from=builder /usr/local/sbin/su-exec /usr/local/sbin/su-exec
+
+WORKDIR /home/
+
+# copy dependencies
+COPY *.py *.txt ./
+
+# Even though Docker is already an isolated environment,
+# it is still good practice to use virtual environments.
+# Remove requirements file after installation.
+RUN python -m venv /usr/local/share/env && \
+		/usr/local/share/env/bin/python -m pip install \
+		-r requirements.txt && rm requirements.txt
+
+# Add virtual environment to path so it is activated by default.
+ENV PATH=/usr/local/share/env/bin:${PATH}
+
+COPY entrypoint.sh .
+RUN chmod +x entrypoint.sh
+
+# run simulation
+ENTRYPOINT [ "/home/entrypoint.sh" ]
+
+CMD [ "python", "run_simulation.py" ]

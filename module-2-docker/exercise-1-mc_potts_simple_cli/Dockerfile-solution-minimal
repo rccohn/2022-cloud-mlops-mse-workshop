@@ -1,0 +1,12 @@
+# start with python
+FROM python:3.10-slim-buster
+
+# copy all dependencies
+COPY *.py *.txt /
+
+# Even though docker provides an isolated environment
+# it is considered good practice to still use virtual environments
+RUN python -m venv /my-env && /my-env/bin/python -m pip \
+		install -r requirements.txt
+
+ENTRYPOINT [ "/my-env/bin/python", "potts_cli.py" ]

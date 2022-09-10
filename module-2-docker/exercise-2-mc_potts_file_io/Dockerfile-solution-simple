@@ -1,0 +1,24 @@
+# to build: docker build -t potts-file-io:simple -f Dockerfile-solution-simple .
+# to run: docker run --rm -v $(pwd)/<input-file.yaml>:/mnt/inputs.yaml \
+                 -v $(pwd)/<output-dir>:/mnt/outputs potts-file-io:simple
+#         parameters from <input-file> will be used to run simulation
+#         results will be saved in <output-dir>
+
+FROM python:3.10-slim-buster
+
+WORKDIR /home
+
+# copy dependencies
+COPY *.py *.txt ./
+
+# Even though Docker is already an isolated environment,
+# it is still good practice to use virtual environments.
+# Remove requirements file after installation.
+RUN python -m venv my-env && my-env/bin/python -m pip \
+		install -r requirements.txt && rm requirements.txt
+
+# Add virtual environment to path so it is activated by default.
+ENV PATH=/home/my-env/bin:${PATH}
+
+# run simulation
+ENTRYPOINT [ "python", "run_simulation.py" ]
