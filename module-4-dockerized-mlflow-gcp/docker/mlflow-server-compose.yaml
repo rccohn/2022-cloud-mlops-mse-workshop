@@ -9,20 +9,22 @@ services:
       - /cloud_sql_proxy
       - -enable_iam_login
       - -instances=${SQL_CONNECTION}=tcp:0.0.0.0:5432
-
     restart: always
     
   mlflow-server:
     depends_on:  # need to start sql auth proxy first, otherwise
     # mlflow server will error out after not being able to connect to db
-      - gcloud-sql-auth-proxy
-    build: images/ # image containing mlflow, google-storage
+      - db 
+    build: images/mlflow-server # image containing mlflow, google-storage
     command: # command to run mlflow ui or server
+      - server
+      - --host
+      - 0.0.0.0
       - --backend-store-uri
-      - postgres://postgres:${POSTGRES_PASSWD}@db:5432/postgres
+      - postgresql://postgres:${POSTGRES_PASSWD}@db/postgres
       - --serve-artifacts # run proxy to serve artifacts up/downloads
       - --artifacts-destination
       - ${ARTIFACT_URI}
     ports:
-      - 5000:5000
+      - "5000:5000"
     restart: always
