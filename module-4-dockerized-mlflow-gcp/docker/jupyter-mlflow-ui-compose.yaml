@@ -23,7 +23,7 @@ services:
       - "--host"
       - 0.0.0.0
       - --backend-store-uri
-      - postgres://postgresql:${POSTGRES_PASSWD}@db/postgres
+      - postgresql://postgres:${POSTGRES_PASSWD}@db/postgres
       - --serve-artifacts # run proxy to serve artifacts up/downloads
       - --artifacts-destination
       - ${ARTIFACT_URI}
