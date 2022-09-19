@@ -1,0 +1,16 @@
+# copy this file to .env and fill in with your own values
+
+# tracking database instance connection name
+# example: my-project:us-central1:name
+SQL_INSTANCE_CONNECTION=
+
+# password for postgres user
+POSTGRES_PASSWD=
+
+# artifact URI of the form gs://<my-bucket>/<path-to-artifacts>
+ARTIFACT_URI=
+
+# username for public MLflow login
+LOGIN_USER=
+# password for public jupyter and MLflow UIs
+LOGIN_PASSWD=
