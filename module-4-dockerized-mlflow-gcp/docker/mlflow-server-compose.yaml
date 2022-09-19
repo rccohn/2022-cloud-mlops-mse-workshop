@@ -1,5 +1,5 @@
 services:
-    db:  # connect to gcp backend
+  db:  # connect to gcp backend
     image: gcr.io/cloudsql-docker/gce-proxy:1.32.0   # image containing sql proxy
     # for now, host networking (container shares networking with host machine)
     # is needed. eventually I might be able to figure out how to get this 
@@ -8,7 +8,7 @@ services:
     command: # command to run gcp sql proxy
       - /cloud_sql_proxy
       - -enable_iam_login
-      - -instances=${INSTANCE_CONNECTION}=tcp:0.0.0.0:5432
+      - -instances=${SQL_CONNECTION}=tcp:0.0.0.0:5432
 
     restart: always
     
@@ -19,7 +19,7 @@ services:
     build: images/ # image containing mlflow, google-storage
     command: # command to run mlflow ui or server
       - --backend-store-uri
-      - postgres://postgres:${POSTGRES_PASSWD}@db/postgres
+      - postgres://postgres:${POSTGRES_PASSWD}@db:5432/postgres
       - --serve-artifacts # run proxy to serve artifacts up/downloads
       - --artifacts-destination
       - ${ARTIFACT_URI}
