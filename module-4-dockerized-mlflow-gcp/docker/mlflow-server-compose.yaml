@@ -1,22 +1,20 @@
 services:
   db:  # connect to gcp backend
     image: gcr.io/cloudsql-docker/gce-proxy:1.32.0   # image containing sql proxy
-    # for now, host networking (container shares networking with host machine)
-    # is needed. eventually I might be able to figure out how to get this 
-    # working without exposing all ports (using expose or ports keywords)
 
-    command: # command to run gcp sql proxy
+    command: # connect to cloud SQL instance with proxy
       - /cloud_sql_proxy
       - -enable_iam_login
       - -instances=${SQL_CONNECTION}=tcp:0.0.0.0:5432
+    # automatically restart container if it unexpectedly goes down    
     restart: unless-stopped
     
   mlflow-server:
     depends_on:  # need to start sql auth proxy first, otherwise
     # mlflow server will error out after not being able to connect to db
       - db 
-    build: images/mlflow-server # image containing mlflow, google-storage
-    command: # command to run mlflow ui or server
+    build: images/mlflow-server # image containing mlflow, google-storage, psycopg2
+    command: # run server connected to correct backends and using artifact proxy
       - server
       - --host
       - 0.0.0.0
@@ -28,3 +26,4 @@ services:
     ports:
       - "5000:5000"
     restart: unless-stopped
+    init: true

@@ -1,24 +1,19 @@
 services:
   db:  # connect to gcp backend
     image: gcr.io/cloudsql-docker/gce-proxy:1.32.0   # image containing sql proxy
-    # for now, host networking (container shares networking with host machine)
-    # is needed. eventually I might be able to figure out how to get this 
-    # working without exposing all ports (using expose or ports keywords)
-
-    command: # command to run gcp sql proxy
+    command: # use proxy to connect to cloud sql instance
       - /cloud_sql_proxy
       - -enable_iam_login
       - -instances=${SQL_CONNECTION}=tcp:0.0.0.0:5432
-
+    # restart if container unexpectedly stops
     restart: unless-stopped
     
   mlflow-ui:
     depends_on:  # need to start sql auth proxy first, otherwise
     # mlflow server will error out after not being able to connect to db
       - db
-    build: images/mlflow-server # image containing mlflow, google-storage
-
-    command: # command to run mlflow ui or server
+    build: images/mlflow-server # image containing mlflow, google-storage, psycopg2
+    command: # run ui connected to correct backends
       - "ui"
       - "--host"
       - 0.0.0.0
@@ -30,29 +25,29 @@ services:
     restart: unless-stopped
     init: true
 
-  proxy:
+  proxy: # nginx reverse proxy to add password protection to mlflow ui
     build: images/proxy
-    
     ports: 
       - "5000:5000"
-    
+    # pass login credentials to container
     environment:
       - LOGIN_USER=${LOGIN_USER}
       - LOGIN_PASSWD=${LOGIN_PASSWD}
-
     restart: unless-stopped
 
   jupyter:
     build: images/jupyter
     environment:
-      - USER_UID
-      - LOGIN_PASSWD=${LOGIN_PASSWD}
+     # uid needs to match user on host or you will get permission error
+      - USER_UID=${USER_UID}
+      - LOGIN_PASSWD=${LOGIN_PASSWD} # password protect container
     ports:
       - "8888:8888"
     volumes:
+    # directory to open jupyter in
       - type: bind
-        source: ${HOME}
+        source: ${WORKDIR}
         target: /mnt
-    
+    init: true
     restart: unless-stopped
 
