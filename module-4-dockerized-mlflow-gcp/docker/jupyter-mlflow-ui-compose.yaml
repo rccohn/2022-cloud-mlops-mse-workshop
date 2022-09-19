@@ -17,7 +17,7 @@ services:
     # mlflow server will error out after not being able to connect to db
       - db
     build: images/mlflow-server # image containing mlflow, google-storage
-}
+
     command: # command to run mlflow ui or server
       - "ui"
       - "--host"
