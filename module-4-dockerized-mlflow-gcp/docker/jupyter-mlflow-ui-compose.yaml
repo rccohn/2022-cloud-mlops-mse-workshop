@@ -8,9 +8,9 @@ services:
     command: # command to run gcp sql proxy
       - /cloud_sql_proxy
       - -enable_iam_login
-      - -instances=${INSTANCE_CONNECTION}=tcp:0.0.0.0:5432
+      - -instances=${SQL_CONNECTION}=tcp:0.0.0.0:5432
 
-    restart: always
+    restart: unless-stopped
     
   mlflow-ui:
     depends_on:  # need to start sql auth proxy first, otherwise
@@ -23,11 +23,11 @@ services:
       - "--host"
       - 0.0.0.0
       - --backend-store-uri
-      - postgres://postgres:${POSTGRES_PASSWD}@db/postgres
+      - postgres://postgresql:${POSTGRES_PASSWD}@db/postgres
       - --serve-artifacts # run proxy to serve artifacts up/downloads
       - --artifacts-destination
       - ${ARTIFACT_URI}
-    restart: always
+    restart: unless-stopped
     init: true
 
   proxy:
@@ -40,7 +40,7 @@ services:
       - LOGIN_USER=${LOGIN_USER}
       - LOGIN_PASSWD=${LOGIN_PASSWD}
 
-    restart: always
+    restart: unless-stopped
 
   jupyter:
     build: images/jupyter
@@ -54,5 +54,5 @@ services:
         source: ${HOME}
         target: /mnt
     
-    restart: always
+    restart: unless-stopped
 
