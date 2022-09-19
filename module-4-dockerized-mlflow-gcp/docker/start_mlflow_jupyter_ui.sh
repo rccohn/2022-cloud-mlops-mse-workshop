@@ -1,5 +1,5 @@
 #! /bin/bash 
-# Enter storage bucket, sql connection string, postgres password, and username
+# fill in the following items before using as a startup script:
 # name of your storage bucket
 export BUCKET=
 # SQL connection string, <project>:<zone>:<name>

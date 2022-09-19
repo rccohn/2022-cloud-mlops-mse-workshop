@@ -1,12 +1,17 @@
 #! /bin/bash 
-# Enter storage bucket, sql connection string, postgres password, and username
-export ARTIFACT_URI=
+# fill in the following items before using as a startup script:
+# name of your storage bucket
+export BUCKET=
+# SQL connection string, <project>:<zone>:<name>
 export SQL_CONNECTION=
+# password for default account on postgres
 export POSTGRES_PASSWD=
+# YOUR account (without @gmail.com), so the startup script knows which home directory to use
 export GCP_USER=
 
 #### Don't change anything below here!!!
 export WORKDIR=/home/${GCP_USER}/
+export ARTIFACT_URI=gs://${BUCKET}/artifacts
 
 # if code has not already been configured
 if [ ! -d ${WORKDIR}/2022-cloud-mlops-mse-workshop ];
