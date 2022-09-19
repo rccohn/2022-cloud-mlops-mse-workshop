@@ -1,19 +1,19 @@
-name: GNN-example
+name: gnn-example-project
 
 docker_env:
-  image: mlflow-project-env
+  image: mlflow-project-env:latest
   # pass user uid for non-root user on container
   environment: ["USER_UID"]
   # mount data as read-only so it can never be accidentally
   # altered or deleted
-  volumes: ["${HOME}/data:/mnt/data:ro"]
+  volumes: ["${DATA_PATH}:/mnt/data:ro"]
 
 entry_points:
   main:
     parameters:
-      data_train: {type: path, default: 'data/train.json'}
-      data_val: {type: path, default: 'data/val.json'}
-      data_test: {type: path, default: 'data/test.json'}
+      data_train: {type: string, default: '/mnt/data/train.json'}
+      data_val: {type: string, default: '/mnt/data/val.json'}
+      data_test: {type: string, default: '/mnt/data/test.json'}
       k: {type: float, default: 1.}
       train_iter: {type: float, default: 2500}
       checkpoint_iter: {type: float, default: 250}

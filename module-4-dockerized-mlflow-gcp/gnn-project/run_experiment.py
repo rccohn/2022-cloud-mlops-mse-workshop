@@ -17,7 +17,7 @@ def main():
     ftrain, fval, ftest = argv[1:4]
     k, train_iter, checkpoint_iter = (int(float(x)) for x in argv[4:7])
     lr, decay = (float(x) for x in argv[7:9])
-    
+    print('paths:', [str(x) for x in Path('/mnt').glob('*')])
     with mlflow.start_run(nested=False):
         mlflow.set_tag('mlflow.runName', 'cgr-SGC')
 

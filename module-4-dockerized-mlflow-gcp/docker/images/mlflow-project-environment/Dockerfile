@@ -27,4 +27,4 @@ ENV PATH="/usr/local/share/miniconda/envs/env/bin:${PATH}"
 
 COPY entrypoint.sh entrypoint.sh
 RUN chmod +x entrypoint.sh
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/home/entrypoint.sh"]
