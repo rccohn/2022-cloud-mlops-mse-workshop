@@ -31,4 +31,4 @@ ENTRYPOINT ["./entrypoint.sh"]
 
 CMD ["python", "-m", "jupyterlab", "--no-browser", "--ip", "0.0.0.0", \
 	"--port", "8888", "--ServerApp.token=", \
-	"--notebook-dir", "/mnt/host-files"]
+	"--notebook-dir", "/mnt/host-files", "--ServerApp.password", "${JUPYTER_PASS_HASH}"]

@@ -20,4 +20,6 @@ fi
 
 # make sure non-root user can access bind-mounted files
 chown jovyan /mnt/host-files
+export JUPYTER_PASS_HASH=$(python -c "from notebook.auth import passwd; \
+    print(passwd('${LOGIN_PASSWD}'))")
 exec /usr/local/sbin/su-exec jovyan "$@"

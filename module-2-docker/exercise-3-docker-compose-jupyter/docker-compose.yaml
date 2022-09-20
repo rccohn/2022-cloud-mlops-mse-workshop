@@ -7,9 +7,10 @@ services:
       dockerfile: Dockerfile
       target: main
     ports:
-      - 8888:8888/tcp
+      - 80:8888/tcp
     environment:
-      - USER_UID
+      - USER_UID=${UID}
+      - PASSWD=${PASSWD}
     volumes:
       - type: bind
         source: ./mount_files
