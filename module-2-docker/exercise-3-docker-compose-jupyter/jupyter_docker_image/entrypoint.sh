@@ -23,4 +23,4 @@ chown jovyan /mnt/host-files
 export JUPYTER_PASS_HASH=$(python -c "from notebook.auth import passwd; \
     print(passwd('${LOGIN_PASSWD}'))")
 exec /usr/local/sbin/su-exec jovyan "python -m jupyterlab --no-browser --ip 0.0.0.0 \
-     --no-browser --ServerApp.token= --ServerApp.password=${JUPYTER_PASS_HASH}"
+     --no-browser --ServerApp.token='' --ServerApp.password=${JUPYTER_PASS_HASH}"
