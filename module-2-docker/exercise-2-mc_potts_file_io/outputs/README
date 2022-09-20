@@ -1,0 +1,3 @@
+After mounting this directory to a container, the results (size stats, 
+final state, and optionally grain evolution gif) will be saved here 
+after the simulation finishes.

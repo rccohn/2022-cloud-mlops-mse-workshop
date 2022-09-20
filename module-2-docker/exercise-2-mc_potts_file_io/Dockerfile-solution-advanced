@@ -3,12 +3,12 @@
 # To match the container UID to 
 # to build: 
 # docker build -t potts-file-io:advanced -f Dockerfile-solution-advanced .
-# to run: docker run --rm -v $(pwd)/<input-file.yaml>:/mnt/inputs.yaml \
-                 -v $(pwd)/<output-dir>:/mnt/outputs \
-				 -e USER_UID=${UID} \
+# to run: docker run --rm -v $(pwd)/inputs.yaml:/mnt/inputs.yaml:ro \
+#                 -v $(pwd)/outputs:/mnt/outputs \
+#				 -e USER_UID=${UID} \
 #				 potts-file-io:advanced
-#         parameters from <input-file> will be used to run simulation
-#         results will be saved in <output-dir>
+#         parameters from inputs.yaml will be used to run simulation
+#         results will be saved in ./outputs/
 # note that UID, your user ID, must be defined on host for this to work!
 
 FROM python:3.10-slim-buster AS builder

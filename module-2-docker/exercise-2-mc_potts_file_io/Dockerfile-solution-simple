@@ -1,8 +1,8 @@
 # to build: docker build -t potts-file-io:simple -f Dockerfile-solution-simple .
-# to run: docker run --rm -v $(pwd)/<input-file.yaml>:/mnt/inputs.yaml \
-                 -v $(pwd)/<output-dir>:/mnt/outputs potts-file-io:simple
-#         parameters from <input-file> will be used to run simulation
-#         results will be saved in <output-dir>
+# to run: docker run --rm -v $(pwd)/inputs.yaml:/mnt/inputs.yaml:ro \
+#                -v $(pwd)/outputs:/mnt/outputs potts-file-io:simple
+#         parameters from inputs.yaml will be used to run simulation
+#         results will be saved in ./outputs
 
 FROM python:3.10-slim-buster
 
