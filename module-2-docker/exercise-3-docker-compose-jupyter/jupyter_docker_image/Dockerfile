@@ -28,7 +28,3 @@ COPY jupyter-settings/ jupyter-settings/
 COPY entrypoint.sh entrypoint.sh
 RUN chmod +x entrypoint.sh 
 ENTRYPOINT ["./entrypoint.sh"]
-
-CMD ["python", "-m", "jupyterlab", "--no-browser", "--ip", "0.0.0.0", \
-	"--port", "8888", "--ServerApp.token=", \
-	"--notebook-dir", "/mnt/host-files", "--ServerApp.password", "${JUPYTER_PASS_HASH}"]
