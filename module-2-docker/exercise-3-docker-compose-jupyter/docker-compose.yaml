@@ -14,5 +14,5 @@ services:
     volumes:
       - type: bind
         source: ./mount_files
-        target: /mnt/host-files
+        target: /mnt
         read_only: false
