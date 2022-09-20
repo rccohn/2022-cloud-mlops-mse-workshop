@@ -10,7 +10,7 @@ services:
       - 80:8888/tcp
     environment:
       - USER_UID=${UID}
-      - PASSWD=${PASSWD}
+      - LOGIN_PASSWD=${PASSWD}
     volumes:
       - type: bind
         source: ./mount_files
