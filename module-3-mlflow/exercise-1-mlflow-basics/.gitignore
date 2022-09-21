@@ -1,2 +1,4 @@
 .ipynb_checkpoints/
+mlruns/
+./mlflow_simple.ipynb
 
