@@ -1,0 +1,19 @@
+# Items you will need to keep track of:
+
+Service account name:
+Storage bucket name:
+Cloud SQL instance connection name:
+Cloud SQL default user "postgres" password:
+
+VM 1: Worker node
+  name:
+  private ip:
+
+VM 2: Tracking server
+  name:
+  private ip:
+
+VM 3 MLflow/Jupyter UI:
+  name:
+  private ip:
+  public ip:
