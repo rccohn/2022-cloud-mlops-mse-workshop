@@ -1,2 +1,2 @@
 # 2022 CMU/AFRL COE Cloud Computing/MLOps for Academic MSE Research
-This repository contains the code for activities in the workshop. Relevant environment files, starter code, and supporting files for each activity are located in the corresponding directory for each module. The slides for the workshop are located on [Google Drive](https://drive.google.com/drive/folders/1vXfhU0zCqPkA0kcGCqqm4-qgDjChl1lE?usp=sharing)
+This repository contains the code for activities in the workshop. Relevant environment files, starter code, and supporting files for each activity are located in the corresponding directory for each module. The slides for the workshop are located on [Google Drive](https://drive.google.com/drive/folders/1vXfhU0zCqPkA0kcGCqqm4-qgDjChl1lE?usp=sharing).
